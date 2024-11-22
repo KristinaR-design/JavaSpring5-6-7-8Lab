@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-align: center;
+        }
+
+        /* Кнопка добавления задачи */
+        a {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #4a90e2;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #357abd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td a {
+            color: #4a90e2;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стиль для пагинации */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            margin: 0 5px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            color: #4a90e2;
+        }
+
+        .pagination a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .pagination .active {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+<h1>My Tasks</h1>
+
+<!-- Форма поиска задач -->
+<form method="get" th:action="@{/tasks}" style="text-align: center; margin-bottom: 20px;">
+    <input type="text" name="search" placeholder="Search by title" th:value="${search}" style="padding: 10px; width: 300px;">
+    <button type="submit" style="padding: 10px 20px; background-color: #4a90e2; color: white; border: none;">Search</button>
+</form>
+
+
+<a th:href="@{/tasks/profile}">Your Profile</a>
+
+
+
+<!-- Таблица задач -->
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.dueDate}"></td>
+        <td th:text="${task.status}"></td>
+        <td th:text="${task.priority}"></td>
+        <td th:text="${task.category.name}"></td>
+        <td>
+            <a th:href="@{|/tasks/edit/${task.id}|}">Edit</a>
+            <a th:href="@{|/tasks/delete/${task.id}|}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Пагинация -->
+<div class="pagination">
+    <a th:if="${currentPage > 0}" th:href="@{|/tasks?page=${currentPage - 1}&size=${size}&search=${search}|}">Previous</a>
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:classappend="${i == currentPage} ? 'active' : ''"
+           th:href="@{|/tasks?page=${i}&size=${size}&search=${search}|}" th:text="${i + 1}"></a>
+    </span>
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{|/tasks?page=${currentPage + 1}&size=${size}&search=${search}|}">Next</a>
+</div>
+
+<a th:href="@{/login}">Back to login</a>
+
+</body>
+</html>
