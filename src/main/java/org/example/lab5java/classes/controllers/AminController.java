@@ -157,25 +157,6 @@ public class AminController {
         return "redirect:/admin";
     }
 
-
-//    @GetMapping("/admin/send-message")
-//    public String showSendMessageForm(Model model) {
-//        model.addAttribute("message", new Email());  // Пустая форма для ввода сообщения
-//        return "admin-send-message";  // Название страницы с формой
-//    }
-//
-//    @PostMapping("/admin/send-message")
-//    public String sendMessageToUser(@ModelAttribute("message") Email messageForm, @RequestParam("username") String username, Model model) {
-//        try {
-//
-//            Users user = userService.findByUsername(username);
-//            String userEmail = user.getEmail();
-//            emailService.sendMessageToUser(userEmail, messageForm.getSubject(), messageForm.getContent());
-//            model.addAttribute("success", "Message successfully sent to " + userEmail);
-//        } catch (Exception e) {
-//            model.addAttribute("error", "Error sending message: " + e.getMessage());
-//        }
-//        return "redirect:/admin"; }
 }
 
 

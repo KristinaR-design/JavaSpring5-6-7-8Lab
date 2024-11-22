@@ -3,6 +3,7 @@ FROM openjdk:17
 
 EXPOSE 8080:8080
 
+LABEL version="1.0"
 
 WORKDIR /app
 
