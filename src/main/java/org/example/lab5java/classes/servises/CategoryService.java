@@ -19,9 +19,5 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Category> findBySpecificNames(){
-        return categoryRepository.findBySpecificNames();
-    }
-
 
 }
